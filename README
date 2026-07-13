@@ -1,20 +1,151 @@
+# AudioHub 🎵
+
+A Python-based smart display application that integrates music streaming and home automation controls. AudioHub displays real-time information including a clock, Spotify playback status, and Home Assistant device controls on a physical display with hardware input support.
+
+## Features
+
+- 🕐 **Real-Time Clock Display** - Shows current time with continuous updates
+- 🎵 **Spotify Integration** - Display current track and playback progress
+- 🏠 **Home Assistant Control** - Toggle and monitor smart home devices
+- 🔊 **Volume Control** - Adjust volume with hardware buttons and visual feedback
+- ⌨️ **Hardware Input Support** - Physical button/input device integration
+- 🎨 **Multi-Screen Interface** - Switch between clock, Spotify, and Home Assistant screens
+
+## Requirements
+
+- Python 3.7+
+- Pygame (for display rendering)
+- Home Assistant instance with API token
+- Spotify account (optional, for Spotify integration)
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/kontrolguy/audiohub.git
+   cd audiohub
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Configure Home Assistant**
+   Create a `config.json` file in the project root:
+   ```json
+   {
+     "homeassistant": {
+       "url": "http://192.168.1.100:8123",
+       "token": "your_long_lived_access_token"
+     },
+     "devices": [
+       {
+         "entity_id": "light.living_room",
+         "name": "Living Room Light"
+       },
+       {
+         "entity_id": "switch.kitchen",
+         "name": "Kitchen Switch"
+       }
+     ]
+   }
+   ```
+
+## Usage
+
+Run the application:
+```bash
+python main.py
+```
+
+The app will start displaying the clock screen by default. Use hardware inputs to:
+- Switch between screens (clock, Spotify, Home Assistant)
+- Adjust volume
+- Control Home Assistant devices
+
+## Project Structure
+
+```
 AudioHub/
-│
-├── main.py
-├── requirements.txt
+├── main.py                 # Entry point
+├── requirements.txt        # Python dependencies
 │
 ├── core/
-│   ├── app.py
-│   └── state.py
+│   ├── app.py             # Main application class and event loop
+│   └── state.py           # Global application state management
 │
 ├── display/
-│   ├── renderer.py
-│   └── screen.py
+│   ├── renderer.py        # Display rendering engine using Pygame
+│   ├── screen.py          # Base screen class
+│   └── volume.py          # Volume display functionality
 │
 ├── screens/
-│   ├── clock.py
-│   ├── spotify.py
-│   └── hass.py
+│   ├── clock.py           # Clock display screen
+│   ├── spotify.py         # Spotify playback screen
+│   └── hass.py            # Home Assistant control screen
 │
-└── hardware/
-    └── input.py
+├── hardware/
+│   └── input.py           # Hardware input event handling
+│
+└── services/
+    └── homeassistant.py   # Home Assistant API client
+```
+
+## Configuration
+
+### config.json
+
+The `config.json` file contains:
+
+- **homeassistant**
+  - `url`: Base URL of your Home Assistant instance
+  - `token`: Long-lived access token (create in Home Assistant settings)
+
+- **devices**: Array of Home Assistant entities to control
+  - `entity_id`: Full entity ID (e.g., `light.living_room`)
+  - `name`: Display name for the device
+
+## API Integration
+
+### Home Assistant
+
+AudioHub communicates with Home Assistant via its REST API to:
+- Fetch current device states
+- Toggle switches and lights
+- Monitor entity updates in real-time
+
+Generate a long-lived access token in Home Assistant:
+1. Go to Settings → Developer Tools → Long-Lived Access Tokens
+2. Create a new token and copy it to your `config.json`
+
+## Architecture
+
+- **Core**: Manages the main application loop, state, and screen updates
+- **Display**: Handles all rendering to the physical display using Pygame
+- **Screens**: Modular display screens (clock, Spotify, Home Assistant)
+- **Hardware**: Captures and processes physical input events
+- **Services**: External integrations (Home Assistant API)
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests.
+
+## License
+
+[Add your license here]
+
+## Troubleshooting
+
+**Home Assistant Connection Failed**
+- Verify the URL and token in `config.json`
+- Ensure Home Assistant is accessible and running
+- Check that the token hasn't expired
+
+**Display Not Showing**
+- Verify Pygame is installed: `pip install pygame`
+- Check display output configuration in `renderer.py`
+
+**Hardware Input Not Working**
+- Verify hardware is connected
+- Check input device configuration in `hardware/input.py`
