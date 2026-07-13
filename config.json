@@ -1,7 +1,7 @@
 {
     "homeassistant": {
-        "url": "http://192.168.0.31:8123",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4MzAxNzQ0MzEzNDk0OTE5YmZhOGY4MjI0ZGUzZTIzNCIsImlhdCI6MTc4Mzk2MzMwOCwiZXhwIjoyMDk5MzIzMzA4fQ.JwEzBwMZDBrEUfa8YvsVBsUsSwXZwbdFYuiwsKO6jBA"
+        "url": "http://HASS_IP:8123",
+        "token": "YOUR_HASS_TOKEN_HERE"
     },
     "devices": [
         {
