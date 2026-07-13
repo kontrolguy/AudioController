@@ -8,20 +8,18 @@ class Renderer:
         pygame.init()
 
         self.screen = pygame.display.set_mode(
-            (width, height)
-        )
-
-        pygame.display.set_caption(
-            "AudioHub"
+            (width,height)
         )
 
         self.clock = pygame.time.Clock()
+
+        self.volume_timer = 0
 
 
     def clear(self):
 
         self.screen.fill(
-            (15, 15, 15)
+            (15,15,15)
         )
 
 

@@ -4,16 +4,15 @@ import pygame
 class HassScreen:
 
 
-    def draw(self,surface,items,selected):
+    def draw(self, surface, items, selected, ha):
 
-
-        font=pygame.font.SysFont(
+        font = pygame.font.SysFont(
             None,
-            32
+            28
         )
 
 
-        title=font.render(
+        title = font.render(
             "HOME ASSISTANT",
             True,
             (255,255,255)
@@ -21,17 +20,47 @@ class HassScreen:
 
         surface.blit(
             title,
-            (70,40)
+            (80,30)
         )
 
 
-        for i,item in enumerate(items):
-
-            color=(0,255,120) if i==selected else (200,200,200)
+        for i, item in enumerate(items[:6]):
 
 
-            text=font.render(
-                ("> " if i==selected else "  ")+item,
+            # állapot lekérés
+            try:
+                current = ha.get_state(
+                    item["entity_id"]
+                )
+
+                value = current["state"]
+
+            except Exception:
+
+                value = "offline"
+
+
+
+            color = (
+                (0,255,120)
+                if i == selected
+                else
+                (200,200,200)
+            )
+
+
+            prefix = "> " if i == selected else "  "
+
+
+            text = font.render(
+                prefix
+                +
+                item["name"]
+                +
+                " : "
+                +
+                value,
+
                 True,
                 color
             )
@@ -39,5 +68,5 @@ class HassScreen:
 
             surface.blit(
                 text,
-                (50,100+i*50)
+                (30,90+i*45)
             )
