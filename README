@@ -36,8 +36,8 @@ A Python-based smart display application that integrates music streaming and hom
    ```json
    {
      "homeassistant": {
-       "url": "http://192.168.1.100:8123",
-       "token": "your_long_lived_access_token"
+       "url": "http://HASS_IP:8123",
+       "token": "HASS_API_TOKEN"
      },
      "devices": [
        {
@@ -131,9 +131,6 @@ Generate a long-lived access token in Home Assistant:
 
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
-## License
-
-[Add your license here]
 
 ## Troubleshooting
 
