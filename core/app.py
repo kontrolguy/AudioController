@@ -42,13 +42,6 @@ class AudioHubApp:
             self.clock_screen.draw(
                 self.renderer.screen
             )
-        if state.volume_visible:
-
-             draw_volume(
-                 self.renderer.screen,
-                state.volume
-             )
-
         elif state.screen == "spotify":
 
             self.spotify_screen.draw(
@@ -60,23 +53,18 @@ class AudioHubApp:
         elif state.screen == "hass":
 
             self.hass_screen.draw(
-            self.renderer.screen,
-            state.hass_items,
-            state.hass_selected,
-            self.ha
-        )
+                self.renderer.screen,
+                state.hass_items,
+                state.hass_selected,
+                self.ha
+            )
 
-    if state.volume_visible:
-
-        draw_volume(
-            self.renderer.screen,
-            state.volume
-        )
-
-
-        if time.time() - state.volume_timer > 2:
-
-            state.volume_visible = False
+        # draw volume overlay if visible
+        if state.volume_visible:
+            draw_volume(
+                self.renderer.screen,
+                state.volume
+            )
 
     def run(self):
 
