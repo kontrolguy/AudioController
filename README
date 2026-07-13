@@ -1,0 +1,20 @@
+AudioHub/
+│
+├── main.py
+├── requirements.txt
+│
+├── core/
+│   ├── app.py
+│   └── state.py
+│
+├── display/
+│   ├── renderer.py
+│   └── screen.py
+│
+├── screens/
+│   ├── clock.py
+│   ├── spotify.py
+│   └── hass.py
+│
+└── hardware/
+    └── input.py
