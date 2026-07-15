@@ -1,0 +1,28 @@
+{
+    "homeassistant": {
+       "url": "ip",
+       "token": "token"
+    },
+    "devices": [
+        {
+            "name": "Ajtó",
+            "entity_id": "binary_sensor.isa_de_blt_4_1eoj4g2sogk00_dw2hl_contact_state_p_2_2",
+            "type": "door"
+        },
+        {
+            "name": "Klíma",
+            "entity_id": "climate.ac_09640145",
+            "type": "climate"
+        },
+        {
+            "name": "Hőmérséklet",
+            "entity_id": "sensor.miaomiaoc_de_blt_4_1gagtfd68gg00_t2_temperature_p_2_1",
+            "type": "sensor"
+        },
+        {
+            "name": "Páratartalom",
+            "entity_id": "sensor.miaomiaoc_de_blt_4_1gagtfd68gg00_t2_relative_humidity_p_2_2",
+            "type": "sensor"
+        }
+    ]
+}

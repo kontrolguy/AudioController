@@ -1,0 +1,4 @@
+pygame>=2.6
+spotipy>=2.25
+python-dotenv>=1.0
+requests>=2.32
