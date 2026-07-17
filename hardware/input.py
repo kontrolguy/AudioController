@@ -1,96 +1,104 @@
 import pygame
-import time
 
 from core.state import state
 
 
-def handle(events):
-
-    for e in events:
-
-        if e.type != pygame.KEYDOWN:
+def handle(
+    events,
+    spotify_service=None,
+    home_assistant=None,
+):
+    for event in events:
+        if event.type != pygame.KEYDOWN:
             continue
 
-
-        # Képernyő váltás
-
-        if e.key == pygame.K_1:
+        if event.key == pygame.K_1:
             state.screen = "clock"
 
-
-        elif e.key == pygame.K_2:
+        elif event.key == pygame.K_2:
             state.screen = "spotify"
 
-
-        elif e.key == pygame.K_3:
+        elif event.key == pygame.K_3:
             state.screen = "hass"
 
-
-
-        # Hangerő
-
-        elif e.key == pygame.K_RIGHT:
-
+        elif event.key == pygame.K_RIGHT:
             state.volume = min(
                 100,
-                state.volume + 5
+                state.volume + 5,
             )
-
             state.show_volume()
 
+            if spotify_service is not None:
+                spotify_service.set_volume(
+                    state.volume
+                )
 
-
-        elif e.key == pygame.K_LEFT:
-
+        elif event.key == pygame.K_LEFT:
             state.volume = max(
                 0,
-                state.volume - 5
+                state.volume - 5,
             )
-
             state.show_volume()
 
+            if spotify_service is not None:
+                spotify_service.set_volume(
+                    state.volume
+                )
 
+        elif (
+            state.screen == "spotify"
+            and spotify_service is not None
+        ):
+            if event.key in (
+                pygame.K_RETURN,
+                pygame.K_SPACE,
+            ):
+                spotify_service.play_pause()
 
-        # Home Assistant navigáció
+            elif event.key == pygame.K_n:
+                spotify_service.next_track()
+
+            elif event.key == pygame.K_p:
+                spotify_service.previous_track()
 
         elif state.screen == "hass":
-
-            if e.key == pygame.K_DOWN:
-
+            if event.key == pygame.K_DOWN:
                 state.hass_selected += 1
 
-                if state.hass_selected >= len(state.hass_items):
+                if (
+                    state.hass_selected
+                    >= len(state.hass_items)
+                ):
                     state.hass_selected = 0
 
-
-            elif e.key == pygame.K_UP:
-
+            elif event.key == pygame.K_UP:
                 state.hass_selected -= 1
 
                 if state.hass_selected < 0:
-                    state.hass_selected = len(state.hass_items)-1
+                    state.hass_selected = (
+                        len(state.hass_items) - 1
+                    )
 
-
-            elif e.key == pygame.K_RETURN:
-
-                if len(state.hass_items) > 0:
-
+            elif event.key == pygame.K_RETURN:
+                if state.hass_items:
                     item = state.hass_items[
                         state.hass_selected
                     ]
 
                     print(
                         "Selected:",
-                        item["name"]
+                        item["name"],
                     )
 
-                    if item["type"] in [
-                        "light",
-                        "switch",
-                        "fan"
-                    ]:
-
-                        print(
-                            "Toggle:",
+                    if (
+                        home_assistant is not None
+                        and item.get("type")
+                        in {
+                            "light",
+                            "switch",
+                            "fan",
+                        }
+                    ):
+                        home_assistant.toggle(
                             item["entity_id"]
                         )
